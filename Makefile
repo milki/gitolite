@@ -2,9 +2,9 @@
 
 %.tar: version = $(subst .tar,,$(subst v,,$@))
 %.tar:
-	mkdir -p gitolite-${version}/conf
-	git describe --tags --long $* > gitolite-${version}/conf/VERSION
+	mkdir -p gitolite-${version}/src
+	git describe --tags --long $* > gitolite-${version}/src/VERSION
 	git archive --format=tar --prefix=gitolite-${version}/ -o gitolite-${version}.tar $*
-	tar -r -f gitolite-${version}.tar gitolite-${version}/conf/VERSION
+	tar -r -f gitolite-${version}.tar gitolite-${version}/src/VERSION
 	gzip gitolite-${version}.tar
 	rm -rf $@ gitolite-${version}
