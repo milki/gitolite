@@ -1,35 +1,133 @@
 <html>
     <head>
-    <title>gitolite</title>
+        <title>gitolite</title>
+        <style type="text/css">
+body, th, td, h1, h2 {
+    color           : #000;
+    font-family     : Verdana, sans-serif;
+    font-size       : 11px;
+}
+
+body {
+    width: 775px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+body div {
+    width : 50%;
+}
+
+table {
+    background-color    : #FFF;
+    border-collapse     : collapse;
+    border-color        : #CACACA;
+    border-spacing      : 0;
+    border-style        : solid solid none none;
+    border-width        : 1px 1px 0 0;
+}
+
+table th, table td {
+    border-width        : 1px;
+    border-style        : solid;
+    border-color        : #D4D4D4;
+    padding         : 1px 2px;
+    white-space     : nowrap;
+}
+
+table th {
+    background-color: #cbd2ec; 
+    color: #000;
+    padding: 2px;
+        text-align: left;
+    font-weight: normal; 
+    font-style: italic; 
+}
+        </style>
+
     </head>
     <body>
         <h1>gitolite</h1>
         <hr>
-            <ul>
-                <li>
-                    <a href="gitolite-2.0.2.tar.gz">gitolite-2.0.2.tar.gz</a>
-                </li>
-                <li>
-                    <a href="gitolite-2.0.3.tar.gz">gitolite-2.0.3.tar.gz</a>
-                </li>
-                <li>
-                    <a href="gitolite-2.1.tar.gz">gitolite-2.1.tar.gz</a>
-                </li>
-                <li>
-                    <a href="gitolite-2.2.tar.gz">gitolite-2.2.tar.gz</a>
-                </li>
-                <li>
-                    <a href="gitolite-2.2.1.tar.gz">gitolite-2.2.1.tar.gz</a>
-                </li>
-                <li>
-                    <a href="gitolite-2.3.tar.gz">gitolite-2.3.tar.gz</a>
-                </li>
-                <li>
-                    <a href="gitolite-2.3.tar.gz">gitolite-3.0.tar.gz</a>
-                </li>
-                <li>
-                    <a href="gitolite-2.3.tar.gz">gitolite-3.01.tar.gz</a>
-                </li>
-            </ul>
+
+        <div id="desc">
+            <p>Gitolite is an access control layer on top of git, which allows access control down to the branch level, including specifying who can and cannot rewind a given branch.</p>
+            <p>Gitolite lets you use a single user on a server to host many git repositories and provide access to many developers, without having to give them real userids on or shell access to the server. Authentication is most commonly done using sshd, but you can also use httpd if you prefer.</p>
+            <p>Gitolite can restrict who can read from (clone/fetch) or write to (push) a repository. It can also restrict who can push to what branch or tag, which is very important in a corporate environment.</p>
+            <p>Gitolite is developed by <a href="https://github.com/sitaramc">Sitaram Chamarty</a> and released under GPLv2 at <a href="https://github.com/sitaramc/gitolite">sitramac/gitolite@github</a>.</p>
+        </div>
+
+        <div id="package">
+            <p>Gitolite v3 documentation is available <a href="http://sitaramc.github.com/gitolite/master-toc.html">here</a>. Gitolite v2 documentation is available <a href="http://sitaramc.github.com/gitolite/g2/master-toc.html">here</a>.</p>
+
+            <p>Gitolite is available in the FreeBSD ports tree as <a href="http://www.freshports.org/devel/gitolite/">devel/gitolite</a> (v3.01) and <a href="http://www.freshports.org/devel/gitolite2/">devel/gitolite2<a/> (v2.3).</p>
+
+            <p>The hosted tarballs are made available for distribution packaging. The tarballs are made with this <a href="https://raw.github.com/milki/gitolite/package/Makefile">Makefile</a> (v2 tarballs with this <a href="https://raw.github.com/milki/gitolite/752b625268aeca465001a41fe46b9da70205f965/Makefile">Makefile</a>).</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>tarball</th>
+                    <th>SHA256</th>
+                    <th>Source Tag</th>
+                    <th>FreeBSD Extra Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="package">
+                    <td><a href="gitolite-2.0.2.tar.gz">gitolite-2.0.2.tar.gz</a></td>
+                    <td>e3f69f069087aa7c09ae98d0e89b1758de69ee98133e721da325163b8dd9ebd2</td>
+                    <td><a href="https://github.com/sitaramc/gitolite/tree/v2.0.2">v2.0.2</a></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><a href="gitolite-2.0.3.tar.gz">gitolite-2.0.3.tar.gz</a></td>
+                    <td>a5d4cf95c69d574a5f78268274acc414873006a279b7299576e3aeb8c2afae7c</td>
+                    <td><a href="https://github.com/sitaramc/gitolite/tree/v2.0.3">v2.0.3</a></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><a href="gitolite-2.1.tar.gz">gitolite-2.1.tar.gz</a></td>
+                    <td>b8c824f3772be3395f7b27bc9de9c93c7c4f2a1c7130095d8358775b2f7a39c5</td>
+                    <td><a href="https://github.com/sitaramc/gitolite/tree/v2.1">v2.1</a></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><a href="gitolite-2.2.tar.gz">gitolite-2.2.tar.gz</a></td>
+                    <td>42a24e1c32c24b327316a7cb1832088001d0e778e794b779aeb7fc309fb6549a</td>
+                    <td><a href="https://github.com/sitaramc/gitolite/tree/v2.2">v2.2</a></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><a href="gitolite-2.2.1.tar.gz">gitolite-2.2.1.tar.gz</a></td>
+                    <td>86203768838d5309ddbf39ccdbc6d494e22060d577cfa480f4b5005cece996c7</td>
+                    <td><a href="https://github.com/sitaramc/gitolite/tree/v2.2.1">v2.2.1</a></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><a href="gitolite-2.3.tar.gz">gitolite-2.3.tar.gz</a></td>
+                    <td>cc973f499194cbe7c9434479383547a172a41a97ee5230af6681785fc40c783b</td>
+                    <td><a href="https://github.com/sitaramc/gitolite/tree/v2.3">v2.3</a></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><a href="gitolite-3.0.tar.gz">gitolite-3.0.tar.gz</a></td>
+                    <td>4348c9ffe2be6a098765d78a75daacdbe2c67e15c9b97bcca41f3648e6addcd8</td>
+                    <td><a href="https://github.com/sitaramc/gitolite/tree/v3.0">v3.0</a></td>
+                    <td>Not FreeBSD compatible. Use v3.01.</a></td>
+                </tr>
+                <tr>
+                    <td><a href="gitolite-3.01.tar.gz">gitolite-3.01.tar.gz</a></td>
+                    <td>5c0141eeab483dd3ebfcd153117492254b6f4f7d11b48907493f9054ee6c5088</td>
+                    <td><a href="https://github.com/sitaramc/gitolite/tree/v3.01">v3.01</a></td>
+                    <td>Tests require gls from sys/coreutils: <a href="v3.01-testing-fbsd.patch">v3.01-testing-fbsd.patch</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div id="contact">
+            <p>Contact <a href="mailto:milki@rescomp.berkeley.edu">milki</a> for questions concerning the FreeBSD gitolite ports or the hosted tarballs and patches here. Visit us at <a href="irc://chat.freenode.net/#gitolite">#gitolite@freenode</a> and <a href="irc://chat.freenode.net/#git">#git@freenode</a> for general help.</p>
+        </div>
     </body>
 </html>
