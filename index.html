@@ -100,6 +100,18 @@ article, header {
             </table>
         </section>
 
+        <section id="portnews">
+            <h3>FreeBSD Port News</h3>
+            <article>
+                <header><time pubdate="Thu May 31 2012">31 May 2012</time></header>
+                <p>devel/gitolite updated to 3.03. devel/gitolite2 updated to 2.3.1</p>
+            </article>
+            <article>
+                <header><time pubdate="Tue May 8 2012">08 May 2012</time></header>
+                <p>The gitolite port has been split into two ports: devel/gitolite for version 3 and devel/gitolite2 for version 2. gitolite 3 is a complete rewrite. Admins must take note of migrating issues from gitolite 2.</p>
+            </article>
+        </section>
+
         <section id="portdesc">
             <h2>FreeBSD port</h2>
             <p>The FreeBSD port does a manual installation of the gitolite files to ensure FreeBSD compatability and adherance to <a href="http://www.freebsd.org/cgi/man.cgi?query=hier%26sektion=7">hier(7)</a>. Optionally, the git user is created for use as the gitolite provider. The gitolite setup instructions are still required to setup a user as a gitolite provider.</p>
@@ -180,7 +192,7 @@ article, header {
                     <td><a href="gitolite-2.3.1.tar.gz">gitolite-2.3.1.tar.gz</a></td>
                     <td>53303fea0154914356830202d3de23f94682bab26197ead8ca05d58818c56e82</td>
                     <td><a href="https://github.com/sitaramc/gitolite/tree/v2.3.1">v2.3.1</a></td>
-                    <td>No FBSD port yet</td>
+                    <td>Paths<a href="#path">&dagger;</a></td>
                 </tr>
                 <tr>
                     <td><a href="gitolite-3.0.tar.gz">gitolite-3.0.tar.gz</a></td>
@@ -204,7 +216,7 @@ article, header {
                     <td><a href="gitolite-3.03.tar.gz">gitolite-3.03.tar.gz</a></td>
                     <td>b3487fd99cc46a7be32a58f8a86a520fc0943814794cc56b5f83d803591737ca</td>
                     <td><a href="https://github.com/sitaramc/gitolite/tree/v3.03">v3.03</a></td>
-                    <td>No FBSD port yet</td>
+                    <td>Paths<a href="#path">&dagger;</a><br /> Tests require gls from sys/coreutils: <a href="v3.03-testing-fbsd.patch">v3.03-testing-fbsd.patch</a></td>
             </tbody>
         </table>
 
