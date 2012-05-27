@@ -19,7 +19,7 @@ body {
     margin-top: 20px;
 }
 
-body div {
+body section {
     width : 50%;
 }
 
@@ -48,6 +48,11 @@ table th {
     font-weight: normal; 
     font-style: italic; 
 }
+
+article, header {
+    display: block;
+}
+
         </style>
 
     </head>
@@ -55,30 +60,52 @@ table th {
         <h1>gitolite</h1>
         <hr>
 
-        <div id="desc">
+        <section id="desc">
             <p>Gitolite is an access control layer on top of git, which allows access control down to the branch level, including specifying who can and cannot rewind a given branch.</p>
             <p>Gitolite lets you use a single user on a server to host many git repositories and provide access to many developers, without having to give them real userids on or shell access to the server. Authentication is most commonly done using sshd, but you can also use httpd if you prefer.</p>
             <p>Gitolite can restrict who can read from (clone/fetch) or write to (push) a repository. It can also restrict who can push to what branch or tag, which is very important in a corporate environment.</p>
             <p>Gitolite is developed by <a href="https://github.com/sitaramc">Sitaram Chamarty</a> and released under GPLv2 at <a href="https://github.com/sitaramc/gitolite">sitaramac/gitolite@github</a>.</p>
-        </div>
+        </section>
 
-        <div id="package">
+        <section id="package">
             <h2>Gitolite package</h2>
 
             <p>Gitolite is available in the FreeBSD ports tree as <a href="http://www.freshports.org/devel/gitolite/">devel/gitolite</a> (v3.01) and <a href="http://www.freshports.org/devel/gitolite2/">devel/gitolite2</a> (v2.3).</p>
             <p>The hosted tarballs are made available for distribution packaging. The tarballs are made with this <a href="https://raw.github.com/milki/gitolite/package/Makefile">Makefile</a> (v2 tarballs with this <a href="https://raw.github.com/milki/gitolite/752b625268aeca465001a41fe46b9da70205f965/Makefile">Makefile</a>) and are not FreeBSD specific.</p>
             <p>Gitolite v3 documentation is available <a href="http://sitaramc.github.com/gitolite/master-toc.html">here</a>. Gitolite v2 documentation is available <a href="http://sitaramc.github.com/gitolite/g2/master-toc.html">here</a>.</p>
-        </div>
 
-        <div id="portnews">
-        </div>
+            <h3>Latest packages</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>tarball</th>
+                        <th>SHA256</th>
+                        <th>Source Tag</th>
+                        <th>FreeBSD Extra Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="gitolite-2.3.1.tar.gz">gitolite-2.3.1.tar.gz</a></td>
+                        <td>53303fea0154914356830202d3de23f94682bab26197ead8ca05d58818c56e82</td>
+                        <td><a href="https://github.com/sitaramc/gitolite/tree/v2.3.1">v2.3.1</a></td>
+                        <td>Paths<a href="#path">&dagger;</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="gitolite-3.03.tar.gz">gitolite-3.03.tar.gz</a></td>
+                        <td>b3487fd99cc46a7be32a58f8a86a520fc0943814794cc56b5f83d803591737ca</td>
+                        <td><a href="https://github.com/sitaramc/gitolite/tree/v3.03">v3.03</a></td>
+                        <td>Paths<a href="#path">&dagger;</a><br /> Tests require gls from sys/coreutils: <a href="v3.03-testing-fbsd.patch">v3.03-testing-fbsd.patch</a></td>
+                </tbody>
+            </table>
+        </section>
 
-        <div id="portdesc">
+        <section id="portdesc">
             <h2>FreeBSD port</h2>
             <p>The FreeBSD port does a manual installation of the gitolite files to ensure FreeBSD compatability and adherance to <a href="http://www.freebsd.org/cgi/man.cgi?query=hier%26sektion=7">hier(7)</a>. Optionally, the git user is created for use as the gitolite provider. The gitolite setup instructions are still required to setup a user as a gitolite provider.</p>
             <p>Note: only the core features of gitolite are guaranteed to work on FreeBSD; any provided non-core features (e.g. hook examples, VREFs, mirroring) have not been examined for FreeBSD compatibility. Some may require additional tweaking such as path fixing.</p>
 
-            <h3>devel/gitolite (v3)</h3>
+            <h3><a href="http://www.freshports.org/devel/gitolite/">devel/gitolite</a> (v3)</h3>
             <ol>
                 <li>Patch files for paths<a href="#path">&dagger;</a></li>
                 <li>Install files to appropriate locations:<ul>
@@ -88,7 +115,7 @@ table th {
                 </ul>
             </ol>
 
-            <h3>devel/gitolite2 (v2)</h3>
+            <h3><a href="http://www.freshports.org/devel/gitolite2/">devel/gitolite2</a> (v2)</h3>
             <ol>
                 <li>Create custom <code>gl-install, gl-auth-command</code></li>
                 <li>Patch files for paths<a href="#path">&dagger;</a></li>
@@ -101,7 +128,7 @@ table th {
                 </ul></li>
             </ol>
 
-        </div>
+        </section>
 
         <table>
             <thead>
@@ -181,12 +208,12 @@ table th {
             </tbody>
         </table>
 
-        <div class="common-patches">
+        <section class="common-patches">
             <p id="path">&dagger;Default perl path in FreeBSD is <code>/usr/local/bin/perl</code>. Default bash path in FreeBSD is <code>/usr/local/bin/bash</code>.</p>
-        </div>
+        </section>
 
-        <div id="contact">
+        <section id="contact">
             <p>Contact <a href="mailto:milki@rescomp.berkeley.edu">milki</a> for questions concerning the FreeBSD gitolite ports or the hosted tarballs and patches here. Visit us at <a href="irc://chat.freenode.net/#gitolite">#gitolite@freenode</a> and <a href="irc://chat.freenode.net/#git">#git@freenode</a> for general help.</p>
-        </div>
+        </section>
     </body>
 </html>
