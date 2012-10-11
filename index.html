@@ -95,14 +95,19 @@ article, header {
                         <td><a href="gitolite-3.1.tar.gz">gitolite-3.1.tar.gz</a></td>
                         <td>36fc270c29e980f7217c203656373d1c44f73035fe18053163301cd10a4e0f04</td>
                         <td><a href="https://github.com/sitaramc/gitolite/tree/v3.1">v3.1</a></td>
-                        <td>No FreeBSD Port test
+                        <td>Paths<a href="#path">&dagger;</a><br /> Tests require gls from sys/coreutils: <a href="v3.1-testing-fbsd.patch">v3.1-testing-fbsd.patch</a></td>
                     </tr>
                 </tbody>
             </table>
         </section>
 
         <section id="portnews">
-            <h3>FreeBSD Port News</h3>
+        <h3>FreeBSD Port News</h3>
+            <article>
+                <header><time pubdate="Wed October 10 2012">10 Oct 2012</time></header>
+                <p>devel/gitolite updated to 3.1,1.</p>
+                <p>A security vulnerability CVE-2012-4506 has been found in previous 3.x releases, discussed in the <a href="https://groups.google.com/forum/#!topic/gitolite/K9SnQNhCQ-0/discussion">mailing list</a>. All users of gitolite 3.x before 3.1 should update.</p>
+            </article>
             <article>
                 <header><time pubdate="Sun August 5 2012">05 Aug 2012</time></header>
                 <p>devel/gitolite updated to 3.04.</p>
@@ -203,43 +208,44 @@ article, header {
                     <td><a href="gitolite-3.0.tar.gz">gitolite-3.0.tar.gz</a></td>
                     <td>4348c9ffe2be6a098765d78a75daacdbe2c67e15c9b97bcca41f3648e6addcd8</td>
                     <td><a href="https://github.com/sitaramc/gitolite/tree/v3.0">v3.0</a></td>
-                    <td>FreeBSD compat issues fixed in v3.01. No port made.</td>
+                    <td>Vulnerable<a href="#CVE-2012-4506">&dagger;&dagger;</a><br />FreeBSD compat issues fixed in v3.01. No port made.</td>
                 </tr>
                 <tr>
                     <td><a href="gitolite-3.01.tar.gz">gitolite-3.01.tar.gz</a></td>
                     <td>5c0141eeab483dd3ebfcd153117492254b6f4f7d11b48907493f9054ee6c5088</td>
                     <td><a href="https://github.com/sitaramc/gitolite/tree/v3.01">v3.01</a></td>
-                    <td>Paths<a href="#path">&dagger;</a><br />Tests require gls from sys/coreutils: <a href="v3.01-testing-fbsd.patch">v3.01-testing-fbsd.patch</a></td>
+                    <td>Vulnerable<a href="#CVE-2012-4506">&dagger;&dagger;</a><br />Paths<a href="#path">&dagger;</a><br />Tests require gls from sys/coreutils: <a href="v3.01-testing-fbsd.patch">v3.01-testing-fbsd.patch</a></td>
                 </tr>
                 <tr>
                     <td><a href="gitolite-3.02.tar.gz">gitolite-3.02.tar.gz</a></td>
                     <td>376b902fa965f46d9e1922980df1d4d8bca175c80d507156dff970086513b545</td>
                     <td><a href="https://github.com/sitaramc/gitolite/tree/v3.02">v3.02</a></td>
-                    <td>No port made.</td>
+                    <td>Vulnerable<a href="#CVE-2012-4506">&dagger;&dagger;</a><br />No port made.</td>
                 </tr>
                 <tr>
                     <td><a href="gitolite-3.03.tar.gz">gitolite-3.03.tar.gz</a></td>
                     <td>b3487fd99cc46a7be32a58f8a86a520fc0943814794cc56b5f83d803591737ca</td>
                     <td><a href="https://github.com/sitaramc/gitolite/tree/v3.03">v3.03</a></td>
-                    <td>Paths<a href="#path">&dagger;</a><br /> Tests require gls from sys/coreutils: <a href="v3.03-testing-fbsd.patch">v3.03-testing-fbsd.patch</a></td>
+                    <td>Vulnerable<a href="#CVE-2012-4506">&dagger;&dagger;</a><br />Paths<a href="#path">&dagger;</a><br /> Tests require gls from sys/coreutils: <a href="v3.03-testing-fbsd.patch">v3.03-testing-fbsd.patch</a></td>
                 </tr>
                 <tr>
                     <td><a href="gitolite-3.04.tar.gz">gitolite-3.04.tar.gz</a></td>
                     <td>900dd144ddfa88cc21fadfef7652799ead78c1be52304506994307c448e6b618</td>
                     <td><a href="https://github.com/sitaramc/gitolite/tree/v3.04">v3.04</a></td>
-                    <td>Paths<a href="#path">&dagger;</a><br /> Tests require gls from sys/coreutils: <a href="v3.04-testing-fbsd.patch">v3.04-testing-fbsd.patch</a></td>
+                    <td>Vulnerable<a href="#CVE-2012-4506">&dagger;&dagger;</a><br />Paths<a href="#path">&dagger;</a><br /> Tests require gls from sys/coreutils: <a href="v3.04-testing-fbsd.patch">v3.04-testing-fbsd.patch</a></td>
                 </tr>
                 <tr>
                     <td><a href="gitolite-3.1.tar.gz">gitolite-3.1.tar.gz</a></td>
                     <td>36fc270c29e980f7217c203656373d1c44f73035fe18053163301cd10a4e0f04</td>
                     <td><a href="https://github.com/sitaramc/gitolite/tree/v3.1">v3.1</a></td>
-                    <td>No FreeBSD Port test
+                    <td>Paths<a href="#path">&dagger;</a><br /> Tests require gls from sys/coreutils: <a href="v3.1-testing-fbsd.patch">v3.1-testing-fbsd.patch</a></td>
                 </tr>
             </tbody>
         </table>
 
-        <section class="common-patches">
+        <section class="common">
             <p id="path">&dagger;Default perl path in FreeBSD is <code>/usr/local/bin/perl</code>. Default bash path in FreeBSD is <code>/usr/local/bin/bash</code>.</p>
+            <p id="CVE-2012-4506">&dagger;&dagger;A security vulnerability CVE-2012-4506 has been found in gitolite 3.x &lt; 3.1 as announced on the <a href="https://groups.google.com/forum/#!topic/gitolite/K9SnQNhCQ-0/discussion">mailing list</a>.</p>
         </section>
 
         <section id="contact">
