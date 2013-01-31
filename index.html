@@ -71,7 +71,7 @@ article, header {
             <h2>Gitolite package</h2>
 
             <p>Gitolite is available in the FreeBSD ports tree as <a href="http://www.freshports.org/devel/gitolite/">devel/gitolite</a> (v3.x) and <a href="http://www.freshports.org/devel/gitolite2/">devel/gitolite2</a> (v2.x).</p>
-            <p>The hosted tarballs are made available for distribution packaging. The tarballs are made with this <a href="https://raw.github.com/milki/gitolite/package/Makefile">Makefile</a> (v2 tarballs with this <a href="https://raw.github.com/milki/gitolite/752b625268aeca465001a41fe46b9da70205f965/Makefile">Makefile</a>) and are not FreeBSD specific.</p>
+            <p>The hosted tarballs are made available for distribution packaging. The tarballs are made with this <a href="https://raw.github.com/milki/gitolite/package/Makefile">Makefile</a> and are not FreeBSD specific.</p>
             <p>Gitolite v3 documentation is available <a href="http://sitaramc.github.com/gitolite/master-toc.html">here</a>. Gitolite v2 documentation is available <a href="http://sitaramc.github.com/gitolite/g2/master-toc.html">here</a>.</p>
 
             <h3>Latest packages</h3>
@@ -103,6 +103,10 @@ article, header {
 
         <section id="portnews">
         <h3>FreeBSD Port News</h3>
+            <article>
+                <header><time pubdate="Sun January 13 2013">13 Jan 2013</time></header>
+                <p>devel/gitolite updated to 3.2,1.</p>
+            </article>
             <article>
                 <header><time pubdate="Wed October 10 2012">10 Oct 2012</time></header>
                 <p>devel/gitolite updated to 3.1,1.</p>
@@ -244,7 +248,7 @@ article, header {
                     <td><a href="gitolite-3.2.tar.gz">gitolite-3.2.tar.gz</a></td>
                     <td>62d56e3910b52d0ecb53d5962d4c919ede2c6c11283c3c845605bfc643e64ab8</td>
                     <td><a href="https://github.com/sitaramc/gitolite/tree/v3.2">v3.2</a></td>
-                    <td>No FreeBSD port yet</td>
+                    <td>Paths<a href="#path">&dagger;</a></td>
                 </tr>
                 <tr>
                     <td><a href="gitolite-3.3.tar.gz">gitolite-3.3.tar.gz</a></td>
@@ -256,6 +260,7 @@ article, header {
         </table>
 
         <section class="common">
+            <p>Some tests are dependent on git version for error strings.</p>
             <p id="path">&dagger;Default perl path in FreeBSD is <code>/usr/local/bin/perl</code>. Default bash path in FreeBSD is <code>/usr/local/bin/bash</code>.</p>
             <p id="CVE-2012-4506">&dagger;&dagger;A security vulnerability CVE-2012-4506 has been found in gitolite 3.x &lt; 3.1 as announced on the <a href="https://groups.google.com/forum/#!topic/gitolite/K9SnQNhCQ-0/discussion">mailing list</a>.</p>
         </section>
