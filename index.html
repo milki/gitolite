@@ -104,6 +104,17 @@ article, header {
         <section id="portnews">
         <h3>FreeBSD Port News</h3>
             <article>
+                <header><time pubddate="Thu Novemeber 14, 2013">14 Nov 2013</time></header>
+                <p>devel/gitolite updated to 3.5.2,1</p>
+                <p>devel/gitolite2 updated to 2.3.1_1</p>
+                <p>As of these port versions, the ports will now retrieve their package source directly from github caches instead of the hosted tarballs. This ensures that any github url changes will not require a a port revision bump and older releases starting from these port versions will still be available.</p>
+            </article>
+
+            <article>
+                <header><time pubdate="Sun October 20 2013">20 Oct 2013</time></header>
+                <p>A security vulnerability has been found in the 3.5.3 release, discussed in the <a href="https://groups.google.com/d/topic/gitolite/Tu1sjaf7A4A/discussion">mailing list</a>. Only new installs from this release are affected.</p>
+            </article>
+            <article>
                 <header><time pubdate="Wed April 24 2013">24 Apr 2013</time></header>
                 <p>devel/gitolite updated to 3.5.1,1.</p>
                 <p>devel/gitolite and devel/gitolite2 have been updated to conform to the new OptionsNG framework.</p>
@@ -250,7 +261,7 @@ article, header {
                     <td>gitolite-3.04.tar.gz</td>
                     <td></td>
                     <td><a href="https://github.com/sitaramc/gitolite/tree/v3.04">v3.04</a></td>
-                    <td>Vulnerable<a href="#CVE-2012-4506">&dagger;&dagger;</a><br />Paths<a href="#path">&dagger;</a></td>
+                    <td>Vulnerable<a href="#CVE-2012-4506">&dagger;&dagger;</a></td>
                 </tr>
                 <tr>
                     <td><a href="gitolite-3.1.tar.gz">gitolite-3.1.tar.gz</a></td>
@@ -292,13 +303,13 @@ article, header {
                     <td><a href="gitolite-3.5.2.tar.gz">gitolite-3.5.2.tar.gz</a></td>
                     <td>eac8ab94350552b9740cbf900732448547533aec9759a0d03388f34ebb8d1b71</td>
                     <td><a href="https://github.com/sitaramc/gitolite/tree/v3.5.2">v3.5.2</a></td>
-                    <td>No FreeBSD port yet</td>
+                    <td>Paths<a href="#path">&dagger;</a></td>
                 </tr>
                 <tr>
                     <td>gitolite-3.5.3.tar.gz</td>
                     <td></td>
                     <td><a href="https://github.com/sitaramc/gitolite/tree/v3.5.3">v3.5.3</a></td>
-                    <td>Vulnerable</td>
+                    <td>Vulnerable<a href="#CVE-2013-4451">&dagger;&dagger;&dagger;</a></td>
                 </tr>
                 <tr>
                     <td><a href="gitolite-3.5.3.1.tar.gz">gitolite-3.5.3.1.tar.gz</a></td>
@@ -313,6 +324,7 @@ article, header {
             <p>Some tests are dependent on git version for error strings and will fail.</p>
             <p id="path">&dagger;Default perl path in FreeBSD is <code>/usr/local/bin/perl</code>. Default bash path in FreeBSD is <code>/usr/local/bin/bash</code>.</p>
             <p id="CVE-2012-4506">&dagger;&dagger;A security vulnerability CVE-2012-4506 has been found in gitolite 3.x &lt; 3.1 as announced on the <a href="https://groups.google.com/forum/#!topic/gitolite/K9SnQNhCQ-0/discussion">mailing list</a>.</p>
+            <p id="CVE-2013-4451">&dagger;&dagger;&dagger;A security vulnerability CVE-2013-4451 has been found in a gitolite 3.5.2 as announced on the <a href="https://groups.google.com/forum/#!topic/gitolite/Tu1sjaf7A4A/discussion">mailing list</a>.</p>
         </section>
 
         <section id="contact">
