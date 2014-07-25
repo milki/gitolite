@@ -93,6 +93,9 @@
             # creates git-config enties from gitolite.conf file entries like 'config foo.bar = baz'
             'git-config',
 
+            # If 'option reference.repo' is set, add alternates on repo creation
+            'create-with-reference',
+
             # creates git-daemon-export-ok files; if you don't use git-daemon, comment this out
             'daemon',
 

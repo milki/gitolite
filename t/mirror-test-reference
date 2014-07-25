@@ -1,0 +1,199 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+# you need 3 disposable userids: sam, frodo, gollum.  Then the test user (say
+# "g3") needs to be able to sudo into them.  Put this in /etc/sudoers:
+
+#       g3 ALL = (sam,frodo,gollum) NOPASSWD: ALL
+
+$ENV{TSH_ERREXIT} = 1;
+
+# this is hardcoded; change it if needed
+use lib "src/lib";
+use Gitolite::Test;
+use Cwd;
+my $workdir = getcwd();
+my $h = $ENV{HOME};
+my ($t, $t2);   # temp vars
+
+# basic tests
+# ----------------------------------------------------------------------
+
+try "plan 67";
+##  try "DEF POK = !/DENIED/; !/failed to push/";
+
+##  confreset;confadd '
+
+##  ';
+
+##  try "ADMIN_PUSH set1; !/FATAL/" or die text();
+
+# ----------------------------------------------------------------------
+
+# switch keys
+sub swk {
+    my $h = $ENV{HOME};
+    my $k = shift;
+    system("cp $h/.ssh/$k $h/.ssh/id_rsa");
+    system("cp $h/.ssh/$k.pub $h/.ssh/id_rsa.pub");
+}
+
+sub all {
+    try "F " . join(" ", @_);
+    try "S " . join(" ", @_);
+}
+
+try "
+    DEF F   =   sudo -u frodo -i
+    DEF S   =   sudo -u sam -i
+";
+
+my $bd = `gitolite query-rc -n GL_BINDIR`;
+
+try "
+    $bd/../t/mirror-test-setup-with-reference.sh;   ok or die mirror setup shell script failed
+        /hello server-frodo, this is frodo/
+        /hello server-sam, this is frodo/
+        /hello server-frodo, this is sam/
+        /hello server-sam, this is sam/
+        /hello admin, this is frodo/
+        /Initialized empty .*/gitolite-admin.git/
+        /Initialized empty .*/r1.git/
+        /Initialized empty .*/r2.git/
+        /Initialized empty .*/testing.git/
+        /Initialized empty .*/gitolite-admin.git/
+        /Initialized empty .*/testing.git/
+";
+
+# ----------------------------------------------------------------------
+# SECTION 1: gitolite-admin shenanigans
+
+# push to frodo and see sam and gollum change
+try "
+    git clone frodo\@localhost:gitolite-admin fga
+        ok; /Cloning into 'fga'.../
+    cd fga;                             ok
+    cp $h/.ssh/u?.pub keydir;           ok
+    git add keydir;                     ok
+    git commit -m 6keys;                ok
+    git push;                           ok
+        /To frodo\@localhost:gitolite-admin/
+        /master -> master/
+    git rev-parse HEAD
+";
+
+chomp($t = text());
+
+try "
+    git ls-remote sam\@localhost:gitolite-admin
+        ok; /$t/
+";
+
+# Pupulate r1 on frodo with lots of commits
+try "
+    cd tsh_tempdir
+    git clone frodo\@localhost:r1 frodo-r1-initial
+                                ok; /Cloning into 'frodo-r1-initial'.../
+    cd frodo-r1-initial;        ok
+    empty;                      ok
+";
+for (1 .. 10) {
+    try "git commit --allow-empty -m test-commit";
+}
+try "
+    git push origin master;     ok; /master -> master/
+    git rev-parse HEAD;         ok; /d5e1ec5/
+";
+
+# CHeck r1 and r2 on sam (should be empty before mirroring)
+try "
+    cd tsh_tempdir
+    git clone sam\@localhost:r1 sam-r1-initial
+                                ok; /Cloning into 'sam-r1-initial'.../
+                                    /empty repository/
+
+    cd tsh_tempdir
+    git clone sam\@localhost:r2 sam-r2-initial
+                                ok; /Cloning into 'sam-r2-initial'.../
+                                    /empty repository/
+";
+
+# Mirror r1
+try "
+    cd tsh_tempdir
+    git clone frodo\@localhost:gitolite-admin frodo-gitolite-admin
+                                ok;
+    cd frodo-gitolite-admin
+";
+put "|cat >> conf/gitolite.conf", "
+repo r1
+    option mirror.master = frodo
+    option mirror.slaves-1 = sam
+";
+try "
+    git add conf/gitolite.conf; ok;
+    git commit -m 'mirror r1';  ok;
+    git push origin master;     ok; !/FATAL/
+                                    /master -> master/
+    git rev-parse HEAD
+";
+
+chomp($t = text());
+
+try "
+    sudo -u frodo -i gitolite mirror push sam r1; ok;
+    git ls-remote sam\@localhost:gitolite-admin
+                                ok; /$t.*master/
+    git ls-remote sam\@localhost:r1
+                                ok; /d5e1ec5.*master/
+";
+
+# Mirror r2 with reference
+try "
+    cd tsh_tempdir
+    git clone frodo\@localhost:r2 frodo-r2
+                                ok; /Cloning into 'frodo-r2'.../
+                                    /empty repository/
+    cd frodo-r2
+    git remote add upstream frodo\@localhost:r1
+    git fetch upstream
+    git checkout -B master upstream/master
+    git commit --allow-empty -m 'new commit'
+    git push origin master
+    git rev-parse HEAD
+";
+
+try "
+    cd tsh_tempdir
+    cd frodo-gitolite-admin
+";
+put "|cat >> conf/gitolite.conf", "
+repo r2
+    option mirror.master = frodo
+    option mirror.slaves-1 = sam
+    option reference.repo = r1
+";
+try "
+    git add conf/gitolite.conf; ok;
+    git commit -m 'mirror r1';  ok;
+    git push origin master;     ok; !/FATAL/
+                                    /master -> master/
+    git rev-parse HEAD
+";
+
+chomp($t = text());
+
+try "
+    sudo -u frodo -i gitolite mirror push sam r2; ok;
+    git ls-remote sam\@localhost:gitolite-admin
+                                ok; /$t.*master/
+    sudo -u sam -i cat repositories/r2.git/objects/info/alternates
+                                ok; /r1.git/objects/
+    sudo -u frodo -i git --git-dir repositories/r1.git count-objects
+                                ok; /12 objects, 24 kilobytes/
+    sudo -u frodo -i git --git-dir repositories/r2.git count-objects
+                                ok; /13 objects, 26 kilobytes/
+    sudo -u sam -i git --git-dir repositories/r2.git count-objects
+                                ok; /1 objects, 2 kilobytes/
+";
