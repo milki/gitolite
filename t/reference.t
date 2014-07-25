@@ -14,6 +14,8 @@ try "plan 14";
 
 my $rb = `gitolite query-rc -n GL_REPO_BASE`;
 
+try "sed -ie 's%.Mirroring.,%\"Mirroring\",\\n\"create-with-reference\",%' ~/.gitolite.rc";
+
 confreset;confadd '
 
     repo source
