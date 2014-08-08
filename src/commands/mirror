@@ -50,6 +50,19 @@ $repo =~ s/\.git$//;
 usage() if not $repo;
 
 if ( $cmd eq 'push' ) {
+    exit push_repo();
+} elsif ($cmd eq 'status') {
+    status();
+} else {
+    # strictly speaking, we could allow some of the possible commands remotely
+    # also, at least for admins.  However, these commands are mainly intended
+    # for server-side scripting so I don't care.
+    usage() if $ENV{GL_USER};
+
+    server_side_commands(@ARGV);
+}
+
+sub push_repo {
     valid_slave( $host, $repo ) if exists $ENV{GL_USER};
     # will die if host not in slaves for repo
 
@@ -61,6 +74,14 @@ if ( $cmd eq 'push' ) {
         # try to propagate the wild repo, including creator name and gl-perms
         my $creator = `cat gl-creator`; chomp($creator);
         trace( 1, `cat gl-perms 2>/dev/null | ssh $host CREATOR=$creator perms -c \\'$repo\\' 2>/dev/null` );
+    }
+
+    if (my $refrepo = repo_reference($repo) ) {
+        # If a repo.reference exists, push that repo to the host if it is empty on the slave
+        if (valid_reference_repo( $host, $refrepo )) {
+            trace( 1, 'mirror: Pushing reference repo $repo first' );
+            system("gitolite mirror push $host $refrepo </dev/null 2>&1");
+        }
     }
 
     my $errors = 0;
@@ -88,8 +109,10 @@ if ( $cmd eq 'push' ) {
         unlink "gl-slave-$host.status";
     }
 
-    exit $errors;
-} elsif ($cmd eq 'status') {
+    return $errors;
+}
+
+sub status {
     valid_slave( $host, $repo ) if exists $ENV{GL_USER};
     # will die if host not in slaves for repo
 
@@ -98,13 +121,6 @@ if ( $cmd eq 'push' ) {
 
     $host = '*' if $host eq 'all';
     map { print_status($_) } sort glob("gl-slave-$host.status");
-} else {
-    # strictly speaking, we could allow some of the possible commands remotely
-    # also, at least for admins.  However, these commands are mainly intended
-    # for server-side scripting so I don't care.
-    usage() if $ENV{GL_USER};
-
-    server_side_commands(@ARGV);
 }
 
 # ----------------------------------------------------------------------
@@ -134,6 +150,35 @@ sub repo_master {
     _die "'$repo' seems to have more than one master" if @list > 1;
 
     return $list[0] || '';
+}
+
+sub repo_reference {
+    my $repo = shift;
+
+    my $ref = git_config( $repo, "^gitolite-options\\.reference\\.repo\$" );
+    my @list = map { split } values %$ref;
+
+    return $list[0] || '';
+}
+
+sub valid_reference_repo {
+    my $host = shift;
+    my $refrepo = shift;
+
+    if ($refrepo) {
+        # Reference repo must exist
+        return if repo_missing($refrepo);
+
+        # Don't try to mirror the reference repo if it is empty
+        my $localrepo = `git ls-remote $rc{GL_REPO_BASE}/$refrepo.git`;
+        return if $? || !$localrepo;
+
+        # Don't try to mirror the reference repo if its already exists on the slave
+        my $remoterepo = `git ls-remote $host:$refrepo`; chomp($remoterepo);
+        return if $? || $remoterepo;
+
+        return $refrepo;
+    }
 }
 
 sub print_status {
