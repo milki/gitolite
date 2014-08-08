@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Push the referenced repo before this repo is pushed
+
+repo=$2
+
+reference=$(gitolite git-config $repo gitolite-options.reference.repo)
+[ -z "$reference" ] && exit 0     # exit if no reference repo was specified
+
+master=$(gitolite git-config $reference gitolite-options.mirror.master)
+[ -z "$master" ] && exit 0     # exit if the reference repo isn't mirrored
+
+hostname=$(gitolite query-rc -q HOSTNAME)
+[ -z "$hostname" ] && exit 0     # exit if this gitolite instance isn't configured properly for mirroring
+
+[ "$1" != "fetch" ] && {
+    ssh $master mirror push $hostname $reference
+}
