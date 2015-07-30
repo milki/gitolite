@@ -9,11 +9,12 @@ use Gitolite::Test;
 # delegation tests -- part 2
 # ----------------------------------------------------------------------
 
-try "plan 55";
+try "plan 57";
 
 try "
     DEF SP_1 = git add conf ; ok; git commit -m %1; ok; /master.* %1/
     DEF SUBCONF_PUSH = SP_1 %2; glt push %1 origin; gsh; /master -> master/
+    DEF SUBCONF_PUSH_FAIL = SP_1 %2; glt push %1 origin; !ok; gsh; /master -> master/
 ";
 
 confreset;confadd '
@@ -80,7 +81,7 @@ confadd '
     repo @u1r
         RW+     =   u6
 ';
-try "SUBCONF_PUSH u2 u2; /FATAL/;
+try "SUBCONF_PUSH_FAIL u2 u2; /FATAL/;
         /W VREF/NAME/conf/gitolite.conf gitolite-admin u2 DENIED by VREF/NAME//
 ";
 
@@ -91,7 +92,7 @@ put   "conf/fragments/u1r.conf", '
     repo @u1r
         RW+     =   u6
 ';
-try "SUBCONF_PUSH u2 u2; /FATAL/
+try "SUBCONF_PUSH_FAIL u2 u2; /FATAL/
         /W VREF/NAME/conf/fragments/u1r.conf gitolite-admin u2 DENIED by VREF/NAME//
 ";
 
