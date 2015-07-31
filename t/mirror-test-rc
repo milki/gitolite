@@ -30,10 +30,6 @@
     # roles.  add more roles (like MANAGER, TESTER, ...) here.
     #   WARNING: if you make changes to this hash, you MUST run 'gitolite
     #   compile' afterward, and possibly also 'gitolite trigger POST_COMPILE'
-    ROLES => {
-        READERS                     =>  1,
-        WRITERS                     =>  1,
-    },
     # uncomment (and change) this if you wish
     # DEFAULT_ROLE_PERMS            =>  'READERS @all',
 
@@ -91,16 +87,10 @@
             'ssh-authkeys',
 
             # creates git-config enties from gitolite.conf file entries like 'config foo.bar = baz'
-            'git-config',
+            # 'git-config',
 
             # If 'option reference.repo' is set, add alternates on repo creation
             'create-with-reference',
-
-            # creates git-daemon-export-ok files; if you don't use git-daemon, comment this out
-            'daemon',
-
-            # creates projects.list file; if you don't use gitweb, comment this out
-            'gitweb',
 
         # These FEATURES are disabled by default; uncomment to enable.  If you
         # need to add new ones, ask on the mailing list :-)
