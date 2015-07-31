@@ -31,12 +31,13 @@ try "plan 152";
 
 # ----------------------------------------------------------------------
 
+my $bd = `gitolite query-rc -n GL_BINDIR`;
+
 # switch keys
 sub swk {
-    my $h = $ENV{HOME};
     my $k = shift;
-    system("cp $h/.ssh/$k $h/.ssh/id_rsa");
-    system("cp $h/.ssh/$k.pub $h/.ssh/id_rsa.pub");
+    system("cp $bd/../t/keys/$k $h/.ssh/id_rsa");
+    system("cp $bd/../t/keys/$k.pub $h/.ssh/id_rsa.pub");
 }
 
 sub all {
@@ -50,8 +51,6 @@ try "
     DEF S   =   sudo -u sam -i
     DEF G   =   sudo -u gollum -i
 ";
-
-my $bd = `gitolite query-rc -n GL_BINDIR`;
 
 try "
     $bd/../t/mirror-test-setup.sh;   ok or die mirror setup shell script failed
@@ -87,7 +86,7 @@ try "
     git clone frodo\@localhost:gitolite-admin fga
         ok; /Cloning into 'fga'.../
     cd fga;                             ok
-    cp $h/.ssh/u?.pub keydir;           ok
+    cp $bd/../t/keys/u*.pub keydir;     ok
     git add keydir;                     ok
     git commit -m 6keys;                ok
     git push;                           ok

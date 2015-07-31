@@ -58,8 +58,9 @@ done
 
 # now copy our admin key to the main host
 cd;cd .ssh
-cp admin id_rsa; cp admin.pub id_rsa.pub
-cp admin.pub /tmp/g3/keys; chmod go+r /tmp/g3/keys/admin.pub
+cp $bd/../t/keys/admin id_rsa; cp $bd/../t/keys/admin.pub id_rsa.pub
+chmod go-rwx id_rsa
+cp $bd/../t/keys/admin.pub /tmp/g3/keys; chmod go+r /tmp/g3/keys/admin.pub
 sudo -u $mainhost -i gitolite setup -pk /tmp/g3/keys/admin.pub
 ssh $mainhost@localhost info
 
