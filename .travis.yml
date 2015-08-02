@@ -1,0 +1,9 @@
+before_install:
+    - sudo apt-get install perl git
+    - sudo apt-get install libjson-perl
+
+before_script:
+    - git fetch --unshallow
+
+script:
+    - prove
