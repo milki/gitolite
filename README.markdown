@@ -1,6 +1,8 @@
 Gitolite README
 ===============
 
+[![Build Status](https://travis-ci.org/sitaramc/gitolite.svg)](https://travis-ci.org/sitaramc/gitolite)
+
 ## about this README
 
 **(Github-users: click the "wiki" link before sending me anything via github.)**
