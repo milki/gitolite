@@ -1,0 +1,12 @@
+addons:
+    apt:
+        packages:
+        - perl
+        - git
+        - libjson-xs-perl
+
+before_script:
+    - git fetch --unshallow
+
+script:
+    - prove
