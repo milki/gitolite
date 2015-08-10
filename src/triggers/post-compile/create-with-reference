@@ -16,29 +16,25 @@ use warnings;
 my $RB = $rc{GL_REPO_BASE};
 _chdir($RB);
 
-# ----------------------------------------------------------------------
-# if called from POST_CREATE, we have only a single repo to worry about
 if ( @ARGV and $ARGV[0] eq 'POST_CREATE' ) {
     my $repo = $ARGV[1];
-    fixup_config($repo);
+    create_alternates($repo);
 
     exit 0;
 }
 
-sub fixup_config {
+# not interested in any other triggers
+exit 0;
+
+sub create_alternates {
     my $pr      = shift;
-    my $creator = creator($pr);
 
-    my $gc = git_config( $pr, '.', 1 );
-    while ( my ( $key, $value ) = each( %{$gc} ) ) {
-        next unless $key =~ /^gitolite-options\./;
-
-        if ( $key eq "gitolite-options.reference.repo" ) {
-            if ( repo_missing($value) ) {
-                _warn "Reference repo $value is not a gitolite repo"
-            } else {
-                _print( "$RB/$pr.git/objects/info/alternates", "$RB/$value.git/objects" );
-            }
+    my $refrepos = git_config( $pr, "^gitolite-options\\.reference\\.repo.*/" );
+    my @alts = map { split } values %$refrepos;
+    for my $alt (@alts) {
+        if ( repo_missing($alt) ) {
+            _warn "Reference repo $alt is not a gitolite repo"
         }
+        _print( "$RB/$pr.git/objects/info/alternates", "$RB/$alt.git/objects\n" );
     }
 }
