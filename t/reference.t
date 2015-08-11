@@ -30,11 +30,7 @@ confreset;confadd '
     option reference.repo = non-existent
 ';
 
-try "
-    ADMIN_PUSH set1; !/FATAL/
-                      /Reference repo non-existent is not a gitolite repo/
-
-" or die text();
+try "ADMIN_PUSH set1; !/FATAL/" or die text();
 
 try " # Verify files
     # source doesn't have alternates
