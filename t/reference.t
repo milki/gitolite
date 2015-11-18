@@ -10,7 +10,7 @@ my $h = $ENV{HOME};
 # fork command
 # ----------------------------------------------------------------------
 
-try "plan 14";
+try "plan 12";
 
 my $rb = `gitolite query-rc -n GL_REPO_BASE`;
 
@@ -24,10 +24,6 @@ confreset;confadd '
     repo fork
         RW+ = u1 u2
     option reference.repo = source
-
-    repo notfork
-        RW+ = u1 u2
-    option reference.repo = non-existent
 ';
 
 try "ADMIN_PUSH set1; !/FATAL/" or die text();
@@ -39,7 +35,4 @@ try " # Verify files
     # fork has source as an alternate
     ls $rb/fork.git/objects/info/alternates;   ok
     cat $rb/fork.git/objects/info/alternates;  ok;  /$rb/source.git/objects/
-
-    # notfork doesn't have alternates
-    ls $rb/notfork.git/objects/info/alternates;  !ok
 ";
