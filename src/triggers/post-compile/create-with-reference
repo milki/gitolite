@@ -32,9 +32,7 @@ sub create_alternates {
     my $refrepos = git_config( $pr, "^gitolite-options\\.reference\\.repo.*/" );
     my @alts = map { split } values %$refrepos;
     for my $alt (@alts) {
-        if ( repo_missing($alt) ) {
-            _warn "Reference repo $alt is not a gitolite repo"
-        }
+        _warn "Reference repo $alt is not yet present" if repo_missing($alt);
         _print( "$RB/$pr.git/objects/info/alternates", "$RB/$alt.git/objects\n" );
     }
 }
