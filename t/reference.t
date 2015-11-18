@@ -10,7 +10,7 @@ my $h = $ENV{HOME};
 # fork command
 # ----------------------------------------------------------------------
 
-try "plan 12";
+try "plan 16";
 
 my $rb = `gitolite query-rc -n GL_REPO_BASE`;
 
@@ -24,6 +24,11 @@ confreset;confadd '
     repo fork
         RW+ = u1 u2
     option reference.repo = source
+
+    repo multifork
+        RW+ = u1 u2
+    option reference.repo-1 = source
+    option reference.repo-2 = fork
 ';
 
 try "ADMIN_PUSH set1; !/FATAL/" or die text();
@@ -35,4 +40,9 @@ try " # Verify files
     # fork has source as an alternate
     ls $rb/fork.git/objects/info/alternates;   ok
     cat $rb/fork.git/objects/info/alternates;  ok;  /$rb/source.git/objects/
+
+    # multifork has multiple alternates
+    ls $rb/multifork.git/objects/info/alternates;   ok
+    cat $rb/multifork.git/objects/info/alternates;  ok;  /$rb/source.git/objects/
+                                                         /$rb/fork.git/objects/
 ";
