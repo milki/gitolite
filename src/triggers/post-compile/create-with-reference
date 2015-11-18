@@ -14,7 +14,6 @@ use strict;
 use warnings;
 
 my $RB = $rc{GL_REPO_BASE};
-_chdir($RB);
 
 if ( @ARGV and $ARGV[0] eq 'POST_CREATE' ) {
     my $repo = $ARGV[1];
@@ -29,7 +28,7 @@ exit 0;
 sub create_alternates {
     my $pr      = shift;
 
-    my $refrepos = git_config( $pr, "^gitolite-options\\.reference\\.repo.*/" );
+    my $refrepos = git_config( $pr, "^gitolite-options\\.reference\\.repo.*" );
     my @alts = map { split } values %$refrepos;
     for my $alt (@alts) {
         _warn "Reference repo $alt is not yet present" if repo_missing($alt);
