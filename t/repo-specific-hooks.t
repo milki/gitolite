@@ -9,7 +9,7 @@ use Gitolite::Test;
 # test script for partial copy feature
 # ----------------------------------------------------------------------
 
-try "plan 128";
+try "plan 131";
 my $h = $ENV{HOME};
 my $rb = `gitolite query-rc -n GL_REPO_BASE`;
 
@@ -173,10 +173,10 @@ try "
 
 # Verify hooks are removed properly
 
-confreset;confadd '
+confadd '
     repo foo
             RW+                 =   @all
-            option hook.post-receive =
+            option hook.post-receive = ""
 
     repo bar
             RW+                 =   @all
@@ -184,7 +184,7 @@ confreset;confadd '
 
     repo baz
             RW+                 =   @all
-            option hook.post-receive =
+            option hook.post-receive = ""
             option hook.post-update =  second
 ';
 
@@ -192,9 +192,11 @@ try "ADMIN_PUSH repo-specific-hooks-02; !/FATAL/" or die text();
 
 try "
     ls $rb/foo.git/hooks/*;  ok;    !/post-receive/
+                                    !/post-receive.h/
     ls $rb/bar.git/hooks/*;  ok;    !/pre-receive.*first/
                                      /pre-receive.h00-second/
     ls $rb/baz.git/hooks/*;  ok;    !/post-receive/
+                                    !/post-receive.h/
                                     !/post-update.*first/
                                      /post-update.h00-second/
 ";
@@ -216,7 +218,7 @@ try "
     PUSH admin master;      ok; /master -. master/
                                 /hooks/pre-receive.h00-second/
                                 !/hooks/pre-receive.*has args:/
-                                /hooks/pre-receive.h00-second has stdin: 0000000000000000000000000000000000000000 cc7808f77c7c7d705f82dc54dc3152146175768f refs/heads/master/
+                                /hooks/pre-receive.h00-second has stdin: cfc8561c7827a8b94df6c5dad156383d4cb210f5 cc7808f77c7c7d705f82dc54dc3152146175768f refs/heads/master/
 
     cd ..
 
@@ -224,7 +226,8 @@ try "
     cd baz
     tc b3;                  ok; /8d20101/
     PUSH admin master;      ok; /master -. master/
-                                !/hooks/post-receive.*/
+                                !/hooks/post-receive/
+                                !/hooks/post-receive.h/
                                 /hooks/post-update.h00-second/
                                 /hooks/post-update.h00-second has args: refs/heads/master/
                                 !/hooks/post-update.*has stdin/
