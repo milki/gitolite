@@ -47,7 +47,7 @@ while (<>) {
     }
 
     my @codes = split /\s+/, $codes;
-    push @{ $repo_hooks{$repo}{$hook} }, @codes;
+    push @{ $repo_hooks{$repo}{$hook} }, @codes if @codes;
 }
 
 for my $repo (keys %repo_hooks) {
@@ -78,9 +78,7 @@ for my $repo (keys %repo_hooks) {
         }
 
         unlink $dst;
-        if ($counter ne "h00") {
-            symlink $driver, $dst or die "could not symlink '$driver' to '$dst'";
-        }
+        symlink $driver, $dst or die "could not symlink '$driver' to '$dst'";
     }
 }
 
